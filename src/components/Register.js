@@ -12,23 +12,23 @@ export default function Register(){
 
 
     
-    const onFormSubmit = (userobj) => {
+    const onFormSubmit = (userObj) => {
             //create formdata obj
         let formData = new FormData();
         //add files to formdata obj
         formData.append('photo',file,file.name)
         //add userobj to formdata object
-        formData.append("userobj",JSON.stringify(userobj))
+        formData.append("userObj",JSON.stringify(userObj))
 
 
 
 
-      console.log(userobj)
+      console.log(userObj)
       //post req
       axios.post("/user/createuser",formData)
       .then(res=>{
-              let resobj=res.data;
-              alert(resobj.message)
+              let resObj=res.data;
+              alert(resObj.message)
               //navigate to login component
               history.push('/Login')
       })

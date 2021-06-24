@@ -11,6 +11,7 @@ app.use(exp.static(path.join(__dirname,'./build')))
 const userApi=require("./APIS/users-api")
 const adminApi=require("./APIS/admin-api")
 const productApi=require("./APIS/product-api")
+require('dotenv').config()
 //const productApi=require("./APIS/products-api")
 
 //db connectivity
@@ -18,7 +19,7 @@ const productApi=require("./APIS/product-api")
 const mongoClient = require("mongodb").MongoClient;
 
 //db connection url
-const dburl="mongodb+srv://spandu:R.Span@1234@javapoint.64azt.mongodb.net/cdb21dx003db?retryWrites=true&w=majority"
+const dburl=process.env.DATABASE_URL;
 //database obj
 //let userCollectionObject;
 
@@ -35,11 +36,13 @@ mongoClient.connect(dburl,{useNewUrlParser:true,useUnifiedTopology:true},(err,cl
         let userCollectionObject=databaseObject.collection("usercollection")
         let adminCollectionObject=databaseObject.collection("admincollection")
         let productCollectionObject=databaseObject.collection("productcollection")
+        let userCartCollectionObject=databaseObject.collection("usercartcollection")
 
         //sharing db collection objects
         app.set("userCollectionObject",userCollectionObject)
         app.set("adminCollectionObject",adminCollectionObject)
         app.set("productCollectionObject",productCollectionObject)
+        app.set("userCartCollectionObject",userCartCollectionObject)
 
         console.log("DB connection success")
 
@@ -93,6 +96,5 @@ app.use((err,req,res,next)=>{
 
 
 //assign port 
-app.listen(8080,()=>{
-    console.log(`server on 8080......`)
-})
+const port = process.env.PORT;
+app.listen(port,()=>console.log(`server on ${port}......`))
